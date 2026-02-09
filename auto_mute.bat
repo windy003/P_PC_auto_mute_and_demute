@@ -1,0 +1,1 @@
+start  /b  pythonw  ./auto_mute.py

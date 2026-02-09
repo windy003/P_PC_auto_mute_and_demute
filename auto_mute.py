@@ -97,16 +97,16 @@ def main():
                 tray_icon.title = f"Auto-Mute [已静音] 空闲 {idle_sec:.0f}s"
                 print(f"[静音] 空闲 {idle_sec:.0f}s，已保存音量 {saved_volume:.0%} 并静音")
 
-            elif idle_sec < idle_threshold and muted_by_us:
+            elif muted_by_us and idle_sec < 1:
                 volume.SetMute(0, None)
                 if saved_volume is not None:
                     volume.SetMasterVolumeLevelScalar(saved_volume, None)
+                    print(f"[恢复] 检测到输入，音量已恢复至 {saved_volume:.0%}")
                 muted_by_us = False
-                print(f"[恢复] 检测到输入，音量已恢复至 {saved_volume:.0%}")
                 tray_icon.title = f"Auto-Mute on Idle ({idle_minutes}min)"
                 saved_volume = None
 
-            time.sleep(1)
+            time.sleep(0.2)
 
         # 退出前恢复音量
         if muted_by_us:
